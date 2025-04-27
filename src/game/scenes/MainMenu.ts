@@ -21,7 +21,7 @@ export class MainMenu extends Scene {
     }).setOrigin(0.5);
 
     // this.add.sprite(200, 300, 'charSpriteSheet').play({ key: 'Char-Idle-Empty', repeat: -1, }).setScale(6);
-    this.add.sprite(200, 300, 'charSpriteSheet').setScale(6).play({ key: 'Char-Run-Empty', repeat: -1, });
+    this.add.sprite(10, 20, 'charSpriteSheet').setScale(1).play({ key: 'Char-Run-Empty', repeat: -1, });
 
     this.input.once('pointerdown', () => {
 
