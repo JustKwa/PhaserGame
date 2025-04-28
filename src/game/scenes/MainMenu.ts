@@ -1,4 +1,5 @@
 import { Scene, GameObjects } from 'phaser';
+import { SCREEN } from '../common/GameConfig';
 
 export class MainMenu extends Scene {
   background: GameObjects.Image;
@@ -14,19 +15,19 @@ export class MainMenu extends Scene {
 
     this.logo = this.add.image(512, 300, 'logo');
 
-    this.title = this.add.text(512, 460, 'Main Menu', {
-      fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-      stroke: '#000000', strokeThickness: 8,
-      align: 'center'
-    }).setOrigin(0.5);
-
-    // this.add.sprite(200, 300, 'charSpriteSheet').play({ key: 'Char-Idle-Empty', repeat: -1, }).setScale(6);
-    this.add.sprite(10, 20, 'charSpriteSheet').setScale(1).play({ key: 'Char-Run-Empty', repeat: -1, });
+    this.title = this.add
+      .text(SCREEN.width / 2, SCREEN.height / 2, 'Main Menu', {
+        fontFamily: 'Arial Black',
+        fontSize: 16,
+        color: '#ffffff',
+        stroke: '#000000',
+        strokeThickness: 8,
+        align: 'center',
+      })
+      .setOrigin(0.5, 0.5);
 
     this.input.once('pointerdown', () => {
-
       this.scene.start('Game');
-
     });
   }
 }

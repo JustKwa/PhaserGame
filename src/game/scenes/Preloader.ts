@@ -1,13 +1,16 @@
 import { Scene } from 'phaser';
+import { GAME_SCENES } from '../common/GameScenes';
+import { assetManager as asM, AssetKeys as AK } from '../common/AssetsImport';
+const { PRELOADER } = GAME_SCENES;
 
 export class Preloader extends Scene {
   constructor() {
-    super('Preloader');
+    super(PRELOADER);
   }
 
   init() {
     //  We loaded this image in our Boot Scene, so we can display it here
-    this.add.image(512, 384, 'background');
+    this.add.image(512, 384, AK.bg);
 
     //  A simple progress bar. This is the outline of the bar.
     this.add.rectangle(512, 384, 468, 32).setStrokeStyle(1, 0xffffff);
@@ -17,24 +20,39 @@ export class Preloader extends Scene {
 
     //  Use the 'progress' event emitted by the LoaderPlugin to update the loading bar
     this.load.on('progress', (progress: number) => {
-
       //  Update the progress bar (our bar is 464px wide, so 100% = 464px)
-      bar.width = 4 + (460 * progress);
-
+      bar.width = 4 + 460 * progress;
     });
   }
 
   preload() {
     //  Load the assets for the game - Replace with your own assets
-    this.load.setPath('assets');
-    this.load.image('logo', 'logo.png');
-    this.load.aseprite('charSpriteSheet', 'CharSpriteSheet.png', 'CharSpriteSheet.json');
-    this.textures.get("charSpriteSheet").setFilter(Phaser.Textures.FilterMode.NEAREST);
+    this.preloadAssets();
   }
 
   create() {
-    this.textures.get("charSpriteSheet").setFilter(Phaser.Textures.FilterMode.NEAREST);
+    this.initializeAssets();
+    this.scene.start(GAME_SCENES.GAME);
+  }
+
+  private preloadAssets() {
+    const charSpriteSheetPaths = asM.getPaths(AK.charSpriteSheet);
+    this.load.aseprite(
+      AK.charSpriteSheet,
+      charSpriteSheetPaths[0],
+      charSpriteSheetPaths[1],
+    );
+    this.load.on(
+      'filecomplete-image-charSpriteSheet',
+      (_key: any, _type: any, _data: any) => {
+        this.textures
+          .get('charSpriteSheet')
+          .setFilter(Phaser.Textures.FilterMode.NEAREST);
+      },
+    );
+  }
+
+  private initializeAssets() {
     this.anims.createFromAseprite('charSpriteSheet');
-    this.scene.start('MainMenu');
   }
 }

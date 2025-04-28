@@ -1,35 +1,41 @@
-import { Scene } from 'phaser';
+import { Scene, Input } from 'phaser';
+import { Player } from '../entity/Player';
+import { SCREEN } from '../common/GameConfig';
 
-export class Game extends Scene
-{
-    camera: Phaser.Cameras.Scene2D.Camera;
-    background: Phaser.GameObjects.Image;
-    msg_text : Phaser.GameObjects.Text;
+export type PlayerInput = Record<string, Input.Keyboard.Key>;
 
-    constructor ()
-    {
-        super('Game');
-    }
+export class Game extends Scene {
+  camera: Phaser.Cameras.Scene2D.Camera;
+  background: Phaser.GameObjects.Image;
+  msg_text: Phaser.GameObjects.Text;
+  private player: Player;
+  private readonly controlScheme = {
+    UP: Phaser.Input.Keyboard.KeyCodes.W,
+    DOWN: Phaser.Input.Keyboard.KeyCodes.S,
+    LEFT: Phaser.Input.Keyboard.KeyCodes.A,
+    RIGHT: Phaser.Input.Keyboard.KeyCodes.D,
+  };
+  private control: PlayerInput;
 
-    create ()
-    {
-        this.camera = this.cameras.main;
-        this.camera.setBackgroundColor(0x00ff00);
+  constructor() {
+    super('Game');
+  }
 
-        this.background = this.add.image(512, 384, 'background');
-        this.background.setAlpha(0.5);
+  create() {
+    this.camera = this.cameras.main;
+    this.camera.setBackgroundColor('a67158');
 
-        this.msg_text = this.add.text(512, 384, 'Make something fun!\nand share it with us:\nsupport@phaser.io', {
-            fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center'
-        });
-        this.msg_text.setOrigin(0.5);
+    this.background = this.add.image(512, 384, 'background');
+    this.background.setAlpha(0.5);
 
-        this.input.once('pointerdown', () => {
+    this.player = new Player(this, SCREEN.width / 2, SCREEN.height / 2);
+    this.player.setBodySize(16, 16);
 
-            this.scene.start('GameOver');
+    this.control = this.input.keyboard!.addKeys(this.controlScheme) as any;
+    console.log(this.control);
+  }
 
-        });
-    }
+  update() {
+    this.player.update(this.control);
+  }
 }

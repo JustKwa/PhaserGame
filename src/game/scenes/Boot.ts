@@ -1,17 +1,18 @@
 import { Scene } from 'phaser';
-import { AssetsImport as Assets } from './common/AssetsImport';
-const { images } = Assets;
+import { GAME_SCENES } from '../common/GameScenes';
+import { assetManager as asM, AssetKeys as AK } from '../common/AssetsImport';
+const { BOOT, PRELOADER } = GAME_SCENES;
 
 export class Boot extends Scene {
   constructor() {
-    super('Boot');
+    super(BOOT);
   }
 
   preload() {
-    this.load.image('background', 'assets/bg.png');
+    this.load.image(AK.bg, asM.getPaths(AK.bg)[0]);
   }
 
   create() {
-    this.scene.start('Preloader');
+    this.scene.start(PRELOADER);
   }
 }
