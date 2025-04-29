@@ -3,6 +3,7 @@ import { Player } from './Player';
 
 export class Gun extends GameObjects.Sprite {
   private _player: Player;
+  private _knockBackRadian: number;
   constructor(scene: Phaser.Scene, x: number, y: number, player: Player) {
     super(scene, x, y, 'gunSpriteSheet');
     scene.add.existing(this);
@@ -10,6 +11,23 @@ export class Gun extends GameObjects.Sprite {
 
     // this.setScale(0.5);
     this.setOrigin(0, 0.5);
+
+    this.on(
+      Phaser.Animations.Events.ANIMATION_COMPLETE,
+      (anim: { key: string }) => {
+        if (anim.key === 'Pistol-Shoot') {
+          this.setFrame(0);
+        }
+      },
+    );
+    this.on(
+      Phaser.Animations.Events.ANIMATION_START,
+      (anim: { key: string }) => {
+        if (anim.key === 'Pistol-Shoot') {
+          this._player.setPlayerShoot(this._knockBackRadian);
+        }
+      },
+    );
 
     scene.input.on(
       Phaser.Input.Events.POINTER_MOVE,
@@ -27,18 +45,18 @@ export class Gun extends GameObjects.Sprite {
     scene.input.on(
       Phaser.Input.Events.POINTER_DOWN,
       (pointer: { x: number; y: number }) => {
+        this._knockBackRadian = this.getRadian(
+          this._player.x,
+          this._player.y,
+          pointer.x,
+          pointer.y,
+        );
         this.play(
           {
             key: 'Pistol-Shoot',
             frameRate: 24,
           },
           true,
-        ).on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-          this.setFrame(0);
-        });
-
-        this._player.setPlayerShoot(
-          this.getRadian(this._player.x, this._player.y, pointer.x, pointer.y),
         );
       },
     );
