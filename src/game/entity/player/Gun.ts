@@ -8,7 +8,7 @@ export class Gun extends GameObjects.Sprite {
     scene.add.existing(this);
     this._player = player;
 
-    this.setScale(0.5);
+    // this.setScale(0.5);
     this.setOrigin(0, 0.5);
 
     scene.input.on(
@@ -22,6 +22,24 @@ export class Gun extends GameObjects.Sprite {
           this.getDegree(this.rotation) < -90;
         this.setFlipY(isFlip);
         this._player.setPlayerFlipX(isFlip);
+      },
+    );
+    scene.input.on(
+      Phaser.Input.Events.POINTER_DOWN,
+      (pointer: { x: number; y: number }) => {
+        this.play(
+          {
+            key: 'Pistol-Shoot',
+            frameRate: 24,
+          },
+          true,
+        ).on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+          this.setFrame(0);
+        });
+
+        this._player.setPlayerShoot(
+          this.getRadian(this._player.x, this._player.y, pointer.x, pointer.y),
+        );
       },
     );
   }

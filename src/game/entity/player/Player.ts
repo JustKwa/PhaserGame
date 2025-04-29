@@ -15,11 +15,30 @@ const Anims = {
   },
 };
 
+enum State {
+  Idle,
+  Move,
+  Shoot,
+}
+
 export class Player extends Physics.Arcade.Sprite {
   private readonly speed: number = 80;
   private readonly acceleration: number = 10;
   private readonly drag: number = 0.005;
+  private _playerInputDir: PhaserMath.Vector2 = new PhaserMath.Vector2(0, 0);
+  private _state: State = State.Idle;
   private _gun: Gun;
+  private _knockBack: {
+    delay: number;
+    duration: number;
+    strength: number;
+  } = {
+    delay: 200,
+    duration: 250,
+    strength: 200,
+  };
+  private _knockBackTimer: number;
+  private _knockBackDir: PhaserMath.Vector2 = new PhaserMath.Vector2(0, 0);
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'charSpriteSheet');
@@ -38,45 +57,34 @@ export class Player extends Physics.Arcade.Sprite {
     this._gun = new Gun(scene, this.x, this.y, this);
   }
 
-  update(keys: PlayerInput) {
-    this.handleMovement(keys);
+  update(keys: PlayerInput, delta: number) {
+    this.handleInput(keys);
+    this._handleState(delta);
     this._gun.update();
   }
 
-  private setAnims(dir: PhaserMath.Vector2) {
-    if (dir.x === 0 && dir.y === 0) {
-      this.play(Anims.idle, true);
-      return;
-    }
-    this.play(Anims.run, true);
-  }
+  private handleInput(keys: PlayerInput) {
+    if (this._state === State.Shoot) return;
 
-  private handleMovement(keys: PlayerInput) {
-    const dir = new PhaserMath.Vector2(0, 0);
+    this._playerInputDir.reset();
 
     if (keys.LEFT.isDown) {
-      dir.x = -1;
+      this._playerInputDir.x = -1;
     } else if (keys.RIGHT.isDown) {
-      dir.x = 1;
+      this._playerInputDir.x = 1;
     }
 
     if (keys.UP.isDown) {
-      dir.y = -1;
+      this._playerInputDir.y = -1;
     } else if (keys.DOWN.isDown) {
-      dir.y = 1;
+      this._playerInputDir.y = 1;
     }
+    this._playerInputDir.normalize();
 
-    dir.normalize();
-    if (dir.x !== 0 && dir.y !== 0) {
-      this.setMaxVelocity(Math.abs(dir.x * this.speed));
-    } else {
-      this.setMaxVelocity(this.speed);
-    }
-
-    this.setAnims(dir);
-    this.setAcceleration(
-      dir.x * this.acceleration * this.speed,
-      dir.y * this.acceleration * this.speed,
+    this._setState(
+      this._playerInputDir.x === 0 && this._playerInputDir.y === 0
+        ? State.Idle
+        : State.Move,
     );
   }
 
@@ -91,5 +99,71 @@ export class Player extends Physics.Arcade.Sprite {
   public setPlayerFlipX(flip: boolean) {
     this.setFlipX(flip);
     this.setOffetOnFlip(flip);
+  }
+
+  private _handleState(delta: number) {
+    switch (this._state) {
+      case State.Idle:
+        this._idle();
+        break;
+      case State.Move:
+        this._move();
+        break;
+      case State.Shoot:
+        this._shoot(delta);
+        break;
+    }
+  }
+
+  private _idle() {
+    this.setAcceleration(0);
+  }
+
+  private _move() {
+    // Cap velocity on diagonals
+    if (this._playerInputDir.x !== 0 && this._playerInputDir.y !== 0) {
+      this.setMaxVelocity(Math.abs(this._playerInputDir.x * this.speed));
+    } else {
+      this.setMaxVelocity(this.speed);
+    }
+    this.setAcceleration(
+      this._playerInputDir.x * this.acceleration * this.speed,
+      this._playerInputDir.y * this.acceleration * this.speed,
+    );
+
+    // Animation
+  }
+
+  private _shoot(delta: number) {
+    this._knockBackTimer += delta;
+    if (this._knockBackTimer < this._knockBack.delay) return;
+    this.setMaxVelocity(this._knockBack.strength);
+    this.setVelocity(
+      -this._knockBackDir.x * this._knockBack.strength,
+      -this._knockBackDir.y * this._knockBack.strength,
+    );
+    if (this._knockBackTimer < this._knockBack.duration) return;
+    this._state = State.Idle;
+  }
+
+  private _setState(state: State) {
+    this._state = state;
+    switch (state) {
+      case State.Idle:
+        this.play(Anims.idle, true);
+        break;
+      case State.Move:
+        this.play(Anims.run, true);
+        break;
+      case State.Shoot:
+        this._knockBackTimer = 0;
+        break;
+    }
+  }
+
+  public setPlayerShoot(r: number) {
+    const snappedR = PhaserMath.Snap.To(r, PhaserMath.PI2 / 8);
+    this._knockBackDir.setToPolar(snappedR);
+    this._setState(State.Shoot);
   }
 }

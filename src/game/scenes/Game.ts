@@ -33,10 +33,9 @@ export class Game extends Scene {
     this.player = new Player(this, SCREEN.width / 2, SCREEN.height / 2);
 
     this.control = this.input.keyboard!.addKeys(this.controlScheme) as any;
-    console.log(this.control);
   }
 
-  update() {
-    this.player.update(this.control);
+  update(_time: number, delta: number) {
+    this.player.update(this.control, delta);
   }
 }
