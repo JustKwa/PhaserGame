@@ -1,6 +1,7 @@
 import { Scene, Input } from 'phaser';
 import { Player } from '../entity/player/Player';
 import { SCREEN } from '../common/GameConfig';
+import { Cursor } from '../entity/Cursor';
 
 export type PlayerInput = Record<string, Input.Keyboard.Key>;
 
@@ -16,6 +17,7 @@ export class Game extends Scene {
     RIGHT: Phaser.Input.Keyboard.KeyCodes.D,
   };
   private control: PlayerInput;
+  private cursor: Cursor;
 
   constructor() {
     super('Game');
@@ -28,14 +30,44 @@ export class Game extends Scene {
     this.background = this.add.image(512, 384, 'background');
     this.background.setAlpha(0.5);
 
-    this.physics.world.setBounds(10, 10, SCREEN.width - 20, SCREEN.height - 20);
+    const boundOffset = 30;
+    this.physics.world.setBounds(
+      boundOffset,
+      boundOffset,
+      SCREEN.width - boundOffset * 2,
+      SCREEN.height - boundOffset * 2,
+    );
 
-    this.player = new Player(this, SCREEN.width / 2, SCREEN.height / 2);
+    this.cursor = new Cursor(this, SCREEN.width / 2, SCREEN.height / 2);
+    this.player = new Player(
+      this,
+      SCREEN.width / 2,
+      SCREEN.height / 2,
+      this.cursor,
+    );
 
     this.control = this.input.keyboard!.addKeys(this.controlScheme) as any;
+
+    this.input.on(
+      Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,
+      this._onPointerDown.bind(this),
+    );
+    this.input.on(
+      Phaser.Input.Events.POINTER_MOVE,
+      this._onPointerMove.bind(this),
+    );
   }
 
   update(_time: number, delta: number) {
     this.player.update(this.control, delta);
+    this.cursor.update();
+  }
+
+  private _onPointerDown() {
+    this.input.mouse!.requestPointerLock();
+  }
+
+  private _onPointerMove(pointer: any) {
+    this.cursor.moveWithPointer(pointer);
   }
 }

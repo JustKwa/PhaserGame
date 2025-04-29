@@ -38,6 +38,7 @@ export class Preloader extends Scene {
   private preloadAssets() {
     const charSpriteSheetPaths = asM.getPaths(AK.charSpriteSheet);
     const gunSpriteSheetPaths = asM.getPaths(AK.gunSpriteSheet);
+    const cursorPaths = asM.getPaths(AK.cursor);
     this.load.aseprite(
       AK.charSpriteSheet,
       charSpriteSheetPaths[0],
@@ -48,10 +49,11 @@ export class Preloader extends Scene {
       `filecomplete-image-${AK.charSpriteSheet}`,
       (_key: any, _type: any, _data: any) => {
         this.textures
-          .get('charSpriteSheet')
+          .get(AK.charSpriteSheet)
           .setFilter(Phaser.Textures.FilterMode.NEAREST);
       },
     );
+
     this.load.aseprite(
       AK.gunSpriteSheet,
       gunSpriteSheetPaths[0],
@@ -61,10 +63,11 @@ export class Preloader extends Scene {
       `filecomplete-image-${AK.gunSpriteSheet}`,
       (_key: any, _type: any, _data: any) => {
         this.textures
-          .get('gunSpriteSheet')
+          .get(AK.gunSpriteSheet)
           .setFilter(Phaser.Textures.FilterMode.NEAREST);
       },
     );
+    this.load.image(AK.cursor, cursorPaths[0]);
   }
 
   private initializeAssets() {

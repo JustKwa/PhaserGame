@@ -1,6 +1,7 @@
 import { Physics, Math as PhaserMath } from 'phaser';
 import { PlayerInput } from '../../scenes/Game';
 import { Gun } from './Gun';
+import { Cursor } from '../Cursor';
 
 const Anims = {
   idle: {
@@ -40,7 +41,7 @@ export class Player extends Physics.Arcade.Sprite {
   private _knockBackTimer: number;
   private _knockBackDir: PhaserMath.Vector2 = new PhaserMath.Vector2(0, 0);
 
-  constructor(scene: Phaser.Scene, x: number, y: number) {
+  constructor(scene: Phaser.Scene, x: number, y: number, cursor: Cursor) {
     super(scene, x, y, 'charSpriteSheet');
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -54,7 +55,7 @@ export class Player extends Physics.Arcade.Sprite {
     this.setDrag(this.drag, this.drag);
     this.setMaxVelocity(this.speed);
 
-    this._gun = new Gun(scene, this.x, this.y, this);
+    this._gun = new Gun(scene, this.x, this.y, this, cursor);
   }
 
   update(keys: PlayerInput, delta: number) {

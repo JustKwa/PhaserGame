@@ -3,6 +3,7 @@ export enum AssetKeys {
   gunSpriteSheet = 'gunSpriteSheet',
   bg = 'bg',
   logo = 'logo',
+  cursor = 'cursor',
 }
 
 const AssetPaths: Record<AssetKeys, string[]> = {
@@ -13,6 +14,7 @@ const AssetPaths: Record<AssetKeys, string[]> = {
   gunSpriteSheet: ['assets/GunSpriteSheet.png', 'assets/GunSpriteSheet.json'],
   bg: ['assets/bg.png'],
   logo: ['assets/logo.png'],
+  cursor: ['assets/Cursor.webp'],
 };
 
 class AssetManager {
