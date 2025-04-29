@@ -1,5 +1,6 @@
 import { Physics, Math as PhaserMath } from 'phaser';
-import { PlayerInput } from '../scenes/Game';
+import { PlayerInput } from '../../scenes/Game';
+import { Gun } from './Gun';
 
 const Anims = {
   idle: {
@@ -18,6 +19,7 @@ export class Player extends Physics.Arcade.Sprite {
   private readonly speed: number = 80;
   private readonly acceleration: number = 10;
   private readonly drag: number = 0.005;
+  private _gun: Gun;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'charSpriteSheet');
@@ -32,9 +34,24 @@ export class Player extends Physics.Arcade.Sprite {
     this.setDamping(true);
     this.setDrag(this.drag, this.drag);
     this.setMaxVelocity(this.speed);
+
+    this._gun = new Gun(scene, this.x, this.y, this);
   }
 
   update(keys: PlayerInput) {
+    this.handleMovement(keys);
+    this._gun.update();
+  }
+
+  private setAnims(dir: PhaserMath.Vector2) {
+    if (dir.x === 0 && dir.y === 0) {
+      this.play(Anims.idle, true);
+      return;
+    }
+    this.play(Anims.run, true);
+  }
+
+  private handleMovement(keys: PlayerInput) {
     const dir = new PhaserMath.Vector2(0, 0);
 
     if (keys.LEFT.isDown) {
@@ -63,14 +80,16 @@ export class Player extends Physics.Arcade.Sprite {
     );
   }
 
-  private setAnims(dir: PhaserMath.Vector2) {
-    if (dir.x === 0 && dir.y === 0) {
-      this.play(Anims.idle, true);
+  private setOffetOnFlip(flip: boolean) {
+    if (flip) {
+      this.setOffset(this.width / 2 - 8, this.height / 2);
       return;
     }
-    this.play(Anims.run, true);
-    if (dir.x !== 0) {
-      this.setFlipX(dir.x < 0);
-    }
+    this.setOffset(this.width / 2 - 5, this.height / 2);
+  }
+
+  public setPlayerFlipX(flip: boolean) {
+    this.setFlipX(flip);
+    this.setOffetOnFlip(flip);
   }
 }

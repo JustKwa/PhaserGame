@@ -1,5 +1,6 @@
 export enum AssetKeys {
   charSpriteSheet = 'charSpriteSheet',
+  gunSpriteSheet = 'gunSpriteSheet',
   bg = 'bg',
   logo = 'logo',
 }
@@ -9,6 +10,7 @@ const AssetPaths: Record<AssetKeys, string[]> = {
     'assets/CharSpriteSheet.png',
     'assets/CharSpriteSheet.json',
   ],
+  gunSpriteSheet: ['assets/GunSpriteSheet.png', 'assets/GunSpriteSheet.json'],
   bg: ['assets/bg.png'],
   logo: ['assets/logo.png'],
 };

@@ -1,5 +1,5 @@
 import { Scene, Input } from 'phaser';
-import { Player } from '../entity/Player';
+import { Player } from '../entity/player/Player';
 import { SCREEN } from '../common/GameConfig';
 
 export type PlayerInput = Record<string, Input.Keyboard.Key>;
