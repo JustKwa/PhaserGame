@@ -26,7 +26,8 @@ export class Player extends Physics.Arcade.Sprite {
 
     this.setScale(1);
     this.play(Anims.idle);
-    this.setBodySize(14, 16);
+    this.setBodySize(12, 8);
+    this.setOffset(this.width / 2 - 5, this.height / 2);
     this.setCollideWorldBounds(true);
     this.setDamping(true);
     this.setDrag(this.drag, this.drag);
@@ -60,7 +61,6 @@ export class Player extends Physics.Arcade.Sprite {
       dir.x * this.acceleration * this.speed,
       dir.y * this.acceleration * this.speed,
     );
-    console.log(this.body?.velocity, dir);
   }
 
   private setAnims(dir: PhaserMath.Vector2) {
@@ -68,8 +68,8 @@ export class Player extends Physics.Arcade.Sprite {
       this.play(Anims.idle, true);
       return;
     }
+    this.play(Anims.run, true);
     if (dir.x !== 0) {
-      this.play(Anims.run, true);
       this.setFlipX(dir.x < 0);
     }
   }

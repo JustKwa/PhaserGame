@@ -28,8 +28,9 @@ export class Game extends Scene {
     this.background = this.add.image(512, 384, 'background');
     this.background.setAlpha(0.5);
 
+    this.physics.world.setBounds(10, 10, SCREEN.width - 20, SCREEN.height - 20);
+
     this.player = new Player(this, SCREEN.width / 2, SCREEN.height / 2);
-    this.player.setBodySize(16, 16);
 
     this.control = this.input.keyboard!.addKeys(this.controlScheme) as any;
     console.log(this.control);
