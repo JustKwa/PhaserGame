@@ -17,7 +17,7 @@ const phasermsg = () => {
 };
 
 export default defineConfig({
-  base: '/repository-name/',
+  base: '/PhaserGame/',
   logLevel: 'warning',
   build: {
     rollupOptions: {
