@@ -6,6 +6,8 @@ export class Gun extends GameObjects.Sprite {
   private _player: Player;
   private _knockBackRadian: number;
   private cursor: Cursor;
+  private _justShoot: boolean = false;
+  private _rotationFollowSpeed: number = 10;
   constructor(
     scene: Phaser.Scene,
     x: number,
@@ -18,14 +20,15 @@ export class Gun extends GameObjects.Sprite {
     this._player = player;
 
     // this.setScale(0.5);
-    this.setOrigin(0, 0.5);
-    this.setScale(1.2);
+    this.setOrigin(0.1, 0.5);
+    this.setScale(1);
 
     this.on(
       Phaser.Animations.Events.ANIMATION_COMPLETE,
       (anim: { key: string }) => {
         if (anim.key === 'Pistol-Shoot') {
           this.setFrame(0);
+          this._justShoot = false;
         }
       },
     );
@@ -34,23 +37,11 @@ export class Gun extends GameObjects.Sprite {
       (anim: { key: string }) => {
         if (anim.key === 'Pistol-Shoot') {
           this._player.setPlayerShoot(this._knockBackRadian);
+          this._justShoot = true;
         }
       },
     );
 
-    // scene.input.on(
-    // Phaser.Input.Events.POINTER_MOVE,
-    //   (pointer: { x: number; y: number }) => {
-    //     this.setRotation(
-    //       this.getRadian(this._player.x, this._player.y, pointer.x, pointer.y),
-    //     );
-    //     const isFlip =
-    //       this.getDegree(this.rotation) > 90 ||
-    //       this.getDegree(this.rotation) < -90;
-    //     this.setFlipY(isFlip);
-    //     this._player.setPlayerFlipX(isFlip);
-    //   },
-    // );
     scene.input.on(
       Phaser.Input.Events.POINTER_DOWN,
       this._onPlayerPointerDown.bind(this),
@@ -59,12 +50,14 @@ export class Gun extends GameObjects.Sprite {
       Phaser.Input.Events.POINTER_DOWN_OUTSIDE,
       this._onPlayerPointerDown.bind(this),
     );
+
     this.cursor = cursor;
+    this.setDepth(2);
   }
 
-  update(): void {
+  update(delta: number): void {
     this.updatePosition();
-    this.updateRotation();
+    this.updateRotation(delta);
   }
 
   private updatePosition() {
@@ -80,12 +73,13 @@ export class Gun extends GameObjects.Sprite {
   }
 
   private _onPlayerPointerDown() {
-    this._knockBackRadian = this.getRadian(
-      this._player.x,
-      this._player.y,
-      this.cursor.x,
-      this.cursor.y,
-    );
+    // this._knockBackRadian = this.getRadian(
+    //   this._player.x,
+    //   this._player.y,
+    //   this.cursor.x,
+    //   this.cursor.y,
+    // );
+    this._knockBackRadian = this.rotation;
     this.play(
       {
         key: 'Pistol-Shoot',
@@ -95,15 +89,16 @@ export class Gun extends GameObjects.Sprite {
     );
   }
 
-  private updateRotation() {
-    this.setRotation(
-      this.getRadian(
-        this._player.x,
-        this._player.y,
-        this.cursor.x,
-        this.cursor.y,
-      ),
+  private updateRotation(delta: number) {
+    if (this._justShoot) return;
+    const r = this.getRadian(
+      this._player.x,
+      this._player.y,
+      this.cursor.x,
+      this.cursor.y,
     );
+    const t = (delta / 1000) * this._rotationFollowSpeed;
+    this.setRotation(Phaser.Math.Angle.RotateTo(this.rotation, r, t));
     const isFlip =
       this.getDegree(this.rotation) > 90 || this.getDegree(this.rotation) < -90;
     this.setFlipY(isFlip);

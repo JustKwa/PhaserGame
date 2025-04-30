@@ -3,3 +3,7 @@ export const SCREEN = {
   height: 300,
   zoom: 3,
 };
+
+export const BOUND = {
+  offset: 30,
+};

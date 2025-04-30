@@ -39,6 +39,7 @@ export class Preloader extends Scene {
     const charSpriteSheetPaths = asM.getPaths(AK.charSpriteSheet);
     const gunSpriteSheetPaths = asM.getPaths(AK.gunSpriteSheet);
     const cursorPaths = asM.getPaths(AK.cursor);
+    const bulletPaths = asM.getPaths(AK.bullet);
     this.load.aseprite(
       AK.charSpriteSheet,
       charSpriteSheetPaths[0],
@@ -68,6 +69,7 @@ export class Preloader extends Scene {
       },
     );
     this.load.image(AK.cursor, cursorPaths[0]);
+    this.load.image(AK.bullet, bulletPaths[0]);
   }
 
   private initializeAssets() {

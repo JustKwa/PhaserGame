@@ -40,8 +40,15 @@ export class Player extends Physics.Arcade.Sprite {
   };
   private _knockBackTimer: number;
   private _knockBackDir: PhaserMath.Vector2 = new PhaserMath.Vector2(0, 0);
+  private _fireCallback: Function;
 
-  constructor(scene: Phaser.Scene, x: number, y: number, cursor: Cursor) {
+  constructor(
+    scene: Phaser.Scene,
+    x: number,
+    y: number,
+    cursor: Cursor,
+    fireCallback: Function,
+  ) {
     super(scene, x, y, 'charSpriteSheet');
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -56,12 +63,13 @@ export class Player extends Physics.Arcade.Sprite {
     this.setMaxVelocity(this.speed);
 
     this._gun = new Gun(scene, this.x, this.y, this, cursor);
+    this._fireCallback = fireCallback;
   }
 
   update(keys: PlayerInput, delta: number) {
     this.handleInput(keys);
     this._handleState(delta);
-    this._gun.update();
+    this._gun.update(delta);
   }
 
   private handleInput(keys: PlayerInput) {
@@ -147,7 +155,7 @@ export class Player extends Physics.Arcade.Sprite {
     this._state = State.Idle;
   }
 
-  private _setState(state: State) {
+  private _setState(state: State, data?: any) {
     this._state = state;
     switch (state) {
       case State.Idle:
@@ -158,6 +166,13 @@ export class Player extends Physics.Arcade.Sprite {
         break;
       case State.Shoot:
         this._knockBackTimer = 0;
+        this._fireCallback(
+          this._gun.x,
+          this._gun.y,
+          data,
+          this.flipX,
+          this._playerInputDir.x,
+        );
         break;
     }
   }
@@ -165,6 +180,6 @@ export class Player extends Physics.Arcade.Sprite {
   public setPlayerShoot(r: number) {
     const snappedR = PhaserMath.Snap.To(r, PhaserMath.PI2 / 8);
     this._knockBackDir.setToPolar(snappedR);
-    this._setState(State.Shoot);
+    this._setState(State.Shoot, r);
   }
 }
