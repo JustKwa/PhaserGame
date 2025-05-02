@@ -61,7 +61,7 @@ export class Gun extends GameObjects.Sprite {
   }
 
   private updatePosition() {
-    this.setPosition(this._player.x, this._player.y);
+    this.setPosition(Math.round(this._player.x), Math.round(this._player.y));
   }
 
   private getRadian(cx: number, cy: number, px: number, py: number) {
@@ -73,12 +73,6 @@ export class Gun extends GameObjects.Sprite {
   }
 
   private _onPlayerPointerDown() {
-    // this._knockBackRadian = this.getRadian(
-    //   this._player.x,
-    //   this._player.y,
-    //   this.cursor.x,
-    //   this.cursor.y,
-    // );
     this._knockBackRadian = this.rotation;
     this.play(
       {
@@ -90,12 +84,13 @@ export class Gun extends GameObjects.Sprite {
   }
 
   private updateRotation(delta: number) {
+    if (!this.cursor) return;
     if (this._justShoot) return;
     const r = this.getRadian(
       this._player.x,
       this._player.y,
-      this.cursor.x,
-      this.cursor.y,
+      this.cursor.getWorldPoint().x,
+      this.cursor.getWorldPoint().y,
     );
     const t = (delta / 1000) * this._rotationFollowSpeed;
     this.setRotation(Phaser.Math.Angle.RotateTo(this.rotation, r, t));

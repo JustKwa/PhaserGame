@@ -12,7 +12,7 @@ const AssetPaths: Record<AssetKeys, string[]> = {
     'assets/CharSpriteSheet.png',
     'assets/CharSpriteSheet.json',
   ],
-  gunSpriteSheet: ['assets/GunSpriteSheet.png', 'assets/GunSpriteSheet.json'],
+  gunSpriteSheet: ['assets/GunSpriteSheet.webp', 'assets/GunSpriteSheet.json'],
   bg: ['assets/bg.png'],
   logo: ['assets/logo.png'],
   cursor: ['assets/Cursor.webp'],
