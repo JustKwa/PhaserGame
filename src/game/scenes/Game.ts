@@ -1,8 +1,8 @@
 import { Scene, Input } from 'phaser';
-import { Player } from '../entity/player/Player';
-import { BOUND } from '../common/GameConfig';
+import { Player } from '../entity/player/Player.ts';
+import { BOUND, SCREEN } from '../common/GameConfig';
 import { Cursor } from '../entity/Cursor';
-import { Bullet } from '../entity/player/Bullet';
+// import { Bullet } from '../entity/player/Bullet';
 
 export type PlayerInput = Record<string, Input.Keyboard.Key>;
 
@@ -19,7 +19,7 @@ export class Game extends Scene {
   };
   private control: PlayerInput;
   private cursor: Cursor;
-  private bullets: Phaser.GameObjects.Group;
+  // private bullets: Phaser.GameObjects.Group;
 
   constructor() {
     super('Game');
@@ -27,7 +27,7 @@ export class Game extends Scene {
 
   create() {
     this.camera = this.cameras.main;
-    this.camera.setZoom(3);
+    this.camera.setZoom(2);
     this.camera.setBackgroundColor('a67158');
 
     this.background = this.add.image(512, 384, 'background');
@@ -41,13 +41,15 @@ export class Game extends Scene {
     );
 
     this.cursor = new Cursor(this, this.camera);
-    this.player = new Player(this, this.cursor, this._fireBullet.bind(this));
-    this.camera.startFollow(this.player, true, 0.1);
-    this.bullets = this.add.group({
-      classType: Bullet,
-      runChildUpdate: true,
-      maxSize: 20,
-    });
+    this.player = new Player(this, SCREEN.width / 2, SCREEN.height / 2, this.cursor);
+
+    this.camera.startFollow(this.player, false, 1, 1);
+
+    // this.bullets = this.add.group({
+    //   classType: Bullet,
+    //   runChildUpdate: true,
+    //   maxSize: 20,
+    // });
 
     this.control = this.input.keyboard!.addKeys(this.controlScheme) as any;
 
@@ -55,6 +57,7 @@ export class Game extends Scene {
       Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,
       this._onPointerDown.bind(this),
     );
+
     this.input.on(
       Phaser.Input.Events.POINTER_MOVE,
       this._onPointerMove.bind(this),
@@ -64,7 +67,6 @@ export class Game extends Scene {
   update(_time: number, delta: number) {
     this.player.update(this.control, delta);
     this.cursor.update();
-    // const bullet = this.bullets.get();
   }
 
   private _onPointerDown() {
@@ -75,16 +77,16 @@ export class Game extends Scene {
     this.cursor.moveWithPointer(pointer);
   }
 
-  private _fireBullet(
-    x: number,
-    y: number,
-    r: number,
-    flip: boolean,
-    playerDirX: number,
-  ) {
-    const bullet: Bullet = this.bullets.get();
-    if (bullet) {
-      bullet.shoot(x, y, r, flip, playerDirX);
-    }
-  }
+  // private _fireBullet(
+  //   x: number,
+  //   y: number,
+  //   r: number,
+  //   flip: boolean,
+  //   playerDirX: number,
+  // ) {
+  //   const bullet: Bullet = this.bullets.get();
+  //   if (bullet) {
+  //     bullet.shoot(x, y, r, flip, playerDirX);
+  //   }
+  // }
 }

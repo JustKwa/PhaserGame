@@ -51,7 +51,7 @@ export class Preloader extends Scene {
       (_key: any, _type: any, _data: any) => {
         this.textures
           .get(AK.charSpriteSheet)
-          .setFilter(Phaser.Textures.FilterMode.NEAREST);
+        // .setFilter(Phaser.Textures.FilterMode.NEAREST);
       },
     );
 
@@ -65,7 +65,7 @@ export class Preloader extends Scene {
       (_key: any, _type: any, _data: any) => {
         this.textures
           .get(AK.gunSpriteSheet)
-          .setFilter(Phaser.Textures.FilterMode.NEAREST);
+        // .setFilter(Phaser.Textures.FilterMode.NEAREST);
       },
     );
     this.load.image(AK.cursor, cursorPaths[0]);

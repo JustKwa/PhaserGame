@@ -1,8 +1,8 @@
-import { Physics, Math as PhaserMath } from 'phaser';
-import { PlayerInput } from '../../scenes/Game';
+import { GameObjects, Math as PhaserMath } from 'phaser';
+import { AssetKeys as AK } from '../../common/AssetsImport';
 import { Gun } from './Gun';
 import { Cursor } from '../Cursor';
-import { SCREEN } from '../../common/GameConfig';
+import { PlayerInput } from '../../scenes/Game';
 
 const Anims = {
   idle: {
@@ -15,62 +15,45 @@ const Anims = {
     repeat: -1,
     frameRate: 12,
   },
-};
-
-enum State {
-  Idle,
-  Move,
-  Shoot,
 }
 
-export class Player extends Physics.Arcade.Sprite {
-  private readonly speed: number = 80;
-  private readonly acceleration: number = 10;
-  private readonly drag: number = 0.005;
+export class Player extends GameObjects.Container {
+  private sprite: GameObjects.Sprite;
+  private gun: Gun;
+  private _spriteOffsetX: number = -3;
+  private _spriteOffsetY: number = -5;
   private _playerInputDir: PhaserMath.Vector2 = new PhaserMath.Vector2(0, 0);
-  private _state: State = State.Idle;
-  private _gun: Gun;
-  private _knockBack: {
-    delay: number;
-    duration: number;
-    strength: number;
-  } = {
-    delay: 200,
-    duration: 250,
-    strength: 200,
-  };
-  private _knockBackTimer: number;
-  private _knockBackDir: PhaserMath.Vector2 = new PhaserMath.Vector2(0, 0);
-  private _fireCallback: Function;
-
-  constructor(scene: Phaser.Scene, cursor: Cursor, fireCallback: Function) {
-    super(scene, SCREEN.width / 2, SCREEN.height / 2, 'charSpriteSheet');
+  private _speed: number = 80;
+  private _acceleration: number = 10;
+  private _drag: number = 0.005;
+  declare body: Phaser.Physics.Arcade.Body;
+  constructor(scene: Phaser.Scene, x: number, y: number, cursor: Cursor) {
+    super(scene, x, y);
 
     scene.add.existing(this);
+
+    this.sprite = new GameObjects.Sprite(scene, this._spriteOffsetX, this._spriteOffsetY, AK.charSpriteSheet);
+    this.gun = new Gun(scene, this._spriteOffsetX, this._spriteOffsetY, this, cursor);
+    this.add([this.sprite, this.gun])
+
+    this.setSize(12, 8);
     scene.physics.add.existing(this);
 
-    this._gun = new Gun(scene, this.x, this.y, this, cursor);
-    this._fireCallback = fireCallback;
-
-    this.setScale(1);
-    this.play(Anims.idle);
-    this.setBodySize(12, 8);
-    this.setOffset(this.width / 2 - 5, this.height / 2);
-    this.setCollideWorldBounds(true);
-    this.setDamping(true);
-    this.setDrag(this.drag, this.drag);
-    this.setMaxVelocity(this.speed);
+    this.body.setCollideWorldBounds(true);
+    this.body.setDrag(this._drag);
+    this.body.setMaxVelocity(this._speed);
+    this.body.setDamping(true);
+    this.sprite.play(Anims.run);
   }
 
-  update(keys: PlayerInput, delta: number) {
-    this.handleInput(keys);
-    this._handleState(delta);
-    this._gun.update(delta);
+  update(input: PlayerInput, delta: number) {
+    this.handleInput(input);
+    this._move();
+    this.gun.update(delta);
   }
 
   private handleInput(keys: PlayerInput) {
-    if (this._state === State.Shoot) return;
-
+    if (!keys) return;
     this._playerInputDir.reset();
 
     if (keys.LEFT.isDown) {
@@ -85,97 +68,17 @@ export class Player extends Physics.Arcade.Sprite {
       this._playerInputDir.y = 1;
     }
     this._playerInputDir.normalize();
-
-    this._setState(
-      this._playerInputDir.x === 0 && this._playerInputDir.y === 0
-        ? State.Idle
-        : State.Move,
-    );
   }
-
-  private setOffetOnFlip(flip: boolean) {
-    if (flip) {
-      this.setOffset(this.width / 2 - 8, this.height / 2);
-      return;
-    }
-    this.setOffset(this.width / 2 - 5, this.height / 2);
-  }
-
-  public setPlayerFlipX(flip: boolean) {
-    this.setFlipX(flip);
-    this.setOffetOnFlip(flip);
-  }
-
-  private _handleState(delta: number) {
-    switch (this._state) {
-      case State.Idle:
-        this._idle();
-        break;
-      case State.Move:
-        this._move();
-        break;
-      case State.Shoot:
-        this._shoot(delta);
-        break;
-    }
-  }
-
-  private _idle() {
-    this.setAcceleration(0);
-  }
-
   private _move() {
-    // Cap velocity on diagonals
     if (this._playerInputDir.x !== 0 && this._playerInputDir.y !== 0) {
-      this.setMaxVelocity(Math.abs(this._playerInputDir.x * this.speed));
+      this.body?.setMaxVelocity(Math.abs(this._playerInputDir.x * this._speed));
     } else {
-      this.setMaxVelocity(this.speed);
+      this.body!.setMaxVelocity(this._speed);
     }
-    this.setAcceleration(
-      this._playerInputDir.x * this.acceleration * this.speed,
-      this._playerInputDir.y * this.acceleration * this.speed,
+    this.body!.setAcceleration(
+      this._playerInputDir.x * this._acceleration * this._speed,
+      this._playerInputDir.y * this._acceleration * this._speed,
     );
-
-    // Animation
   }
 
-  private _shoot(delta: number) {
-    this._knockBackTimer += delta;
-    if (this._knockBackTimer < this._knockBack.delay) return;
-    this.setMaxVelocity(this._knockBack.strength);
-    this.setVelocity(
-      -this._knockBackDir.x * this._knockBack.strength,
-      -this._knockBackDir.y * this._knockBack.strength,
-    );
-    if (this._knockBackTimer < this._knockBack.duration) return;
-    this._state = State.Idle;
-  }
-
-  private _setState(state: State, data?: any) {
-    this._state = state;
-    switch (state) {
-      case State.Idle:
-        this.play(Anims.idle, true);
-        break;
-      case State.Move:
-        this.play(Anims.run, true);
-        break;
-      case State.Shoot:
-        this._knockBackTimer = 0;
-        this._fireCallback(
-          this._gun.x,
-          this._gun.y,
-          data,
-          this.flipX,
-          this._playerInputDir.x,
-        );
-        break;
-    }
-  }
-
-  public setPlayerShoot(r: number) {
-    const snappedR = PhaserMath.Snap.To(r, PhaserMath.PI2 / 8);
-    this._knockBackDir.setToPolar(snappedR);
-    this._setState(State.Shoot, r);
-  }
 }

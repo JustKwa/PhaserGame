@@ -14,7 +14,6 @@ export class Cursor extends GameObjects.Sprite {
   }
 
   public moveWithPointer(pointer: any) {
-    console.log(this.getWorldPoint().x, this.getWorldPoint().y);
     this.x += pointer.movementX;
     this.y += pointer.movementY;
     this.x = Phaser.Math.Clamp(this.x, 0, SCREEN.width);
