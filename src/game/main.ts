@@ -11,7 +11,7 @@ const config: Phaser.Types.Core.GameConfig = {
   type: AUTO,
   width: width * scale,
   height: height * scale,
-  zoom: 2,
+  zoom: 1,
   autoRound: false,
   roundPixels: false,
   pixelArt: true,
