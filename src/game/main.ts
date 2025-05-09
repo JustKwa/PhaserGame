@@ -5,17 +5,17 @@ import { MainMenu } from './scenes/MainMenu';
 import { AUTO, Game } from 'phaser';
 import { Preloader } from './scenes/Preloader';
 import { SCREEN } from './common/GameConfig';
-const { width, height } = SCREEN;
+const { width, height, scale } = SCREEN;
 
 const config: Phaser.Types.Core.GameConfig = {
   type: AUTO,
-  width,
-  height,
-  zoom: 1,
-  // autoRound: false,
-  // roundPixels: false,
+  width: width * scale,
+  height: height * scale,
+  zoom: 2,
+  autoRound: false,
+  roundPixels: false,
   pixelArt: true,
-  // antialias: true,
+  antialias: false,
   parent: 'game-container',
   backgroundColor: '#028af8',
   scene: [Boot, Preloader, MainMenu, MainGame, GameOver],

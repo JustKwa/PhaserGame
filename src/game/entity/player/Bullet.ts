@@ -1,5 +1,6 @@
 import { GameObjects } from 'phaser';
 import { BOUND } from '../../common/GameConfig';
+import { Gun } from './Gun';
 
 export class Bullet extends GameObjects.Sprite {
   private speed: number;
@@ -8,25 +9,31 @@ export class Bullet extends GameObjects.Sprite {
   private _playerDirX: number = 0;
   private _squeezeAnimationConfig: Phaser.Types.Tweens.TweenBuilderConfig;
   private _squeezeAnimationTween: Phaser.Tweens.Tween;
-  private readonly OFFSET_X = 15;
-  private readonly OFFSET_Y = -2;
+  private readonly OFFSET_X = 10;
+  private readonly OFFSET_Y = -2.3;
   private readonly DELAY = 120;
   private readonly BULLET_DISTANCE = 340;
   private readonly BULLET_TIME = 0.7;
+  public static Gun: Gun;
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'bullet');
-    this.setOrigin(0.1, 0.5);
+    this.setOrigin(0, 0.5);
     this.speed = Phaser.Math.GetSpeed(this.BULLET_DISTANCE, this.BULLET_TIME);
     this._bound = scene.physics.world.bounds;
-    this.setDepth(1);
+    this.setDepth(0);
+    this.setScale(0.5);
     this._squeezeAnimationConfig = {
       targets: this,
-      scaleX: 2,
-      scaleY: 1,
-      delay: this._isShootingSameDirection(this._playerDirX) ? 0 : 140,
+      scaleX: 0.7,
+      scaleY: 0.5,
+      delay: this._isShootingSameDirection(this._playerDirX) ? 100 : 140,
       onStart: () => {
-        this.setScale(1, 0.8);
+        this.setScale(0.5, 0.4);
         this.setVisible(true);
+        this.setPosition(
+          Bullet.Gun.getWorldPoint().x,
+          Bullet.Gun.getWorldPoint().y + this.OFFSET_Y,
+        );
       },
       duration: 2000,
       repeat: 0,

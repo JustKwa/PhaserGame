@@ -49,8 +49,7 @@ export class Preloader extends Scene {
       // 'filecomplete-image-charSpriteSheet',
       `filecomplete-image-${AK.charSpriteSheet}`,
       (_key: any, _type: any, _data: any) => {
-        this.textures
-          .get(AK.charSpriteSheet)
+        this.textures.get(AK.charSpriteSheet);
         // .setFilter(Phaser.Textures.FilterMode.NEAREST);
       },
     );
@@ -63,17 +62,17 @@ export class Preloader extends Scene {
     this.load.on(
       `filecomplete-image-${AK.gunSpriteSheet}`,
       (_key: any, _type: any, _data: any) => {
-        this.textures
-          .get(AK.gunSpriteSheet)
+        this.textures.get(AK.gunSpriteSheet);
         // .setFilter(Phaser.Textures.FilterMode.NEAREST);
       },
     );
     this.load.image(AK.cursor, cursorPaths[0]);
     this.load.image(AK.bullet, bulletPaths[0]);
+    this.load.image('tilemap', 'assets/tilemap.png');
   }
 
   private initializeAssets() {
-    this.anims.createFromAseprite(AK.charSpriteSheet);
-    this.anims.createFromAseprite(AK.gunSpriteSheet);
+    // this.anims.createFromAseprite(AK.charSpriteSheet);
+    // this.anims.createFromAseprite(AK.gunSpriteSheet);
   }
 }

@@ -2,7 +2,7 @@ import { Scene, Input } from 'phaser';
 import { Player } from '../entity/player/Player.ts';
 import { BOUND, SCREEN } from '../common/GameConfig';
 import { Cursor } from '../entity/Cursor';
-// import { Bullet } from '../entity/player/Bullet';
+import { Bullet } from '../entity/player/Bullet';
 
 export type PlayerInput = Record<string, Input.Keyboard.Key>;
 
@@ -19,7 +19,7 @@ export class Game extends Scene {
   };
   private control: PlayerInput;
   private cursor: Cursor;
-  // private bullets: Phaser.GameObjects.Group;
+  private bullets: Phaser.GameObjects.Group;
 
   constructor() {
     super('Game');
@@ -27,10 +27,18 @@ export class Game extends Scene {
 
   create() {
     this.camera = this.cameras.main;
-    this.camera.setZoom(2);
-    this.camera.setBackgroundColor('a67158');
+    this.camera.setZoom(SCREEN.scale);
+    this.camera.setPosition(0, 0);
+    this.camera.setBackgroundColor('443830');
 
-    this.background = this.add.image(512, 384, 'background');
+    this.background = this.add
+      .image(
+        (SCREEN.width * SCREEN.scale) / 2,
+        (SCREEN.height * SCREEN.scale) / 2,
+        'tilemap',
+      )
+      .setScale(SCREEN.scale);
+
     this.background.setAlpha(0.5);
 
     this.physics.world.setBounds(
@@ -39,17 +47,28 @@ export class Game extends Scene {
       BOUND.width - BOUND.offset * 2,
       BOUND.height - BOUND.offset * 2,
     );
+    this.camera.setBounds(
+      BOUND.offset,
+      BOUND.offset,
+      BOUND.width - BOUND.offset * 2,
+      BOUND.height - BOUND.offset * 2,
+    );
 
     this.cursor = new Cursor(this, this.camera);
-    this.player = new Player(this, SCREEN.width / 2, SCREEN.height / 2, this.cursor);
+    this.player = new Player(
+      this,
+      (SCREEN.width * SCREEN.scale) / 2,
+      (SCREEN.height * SCREEN.scale) / 2,
+      this.cursor,
+      this._fireBullet.bind(this),
+      this.camera,
+    );
 
-    this.camera.startFollow(this.player, false, 1, 1);
-
-    // this.bullets = this.add.group({
-    //   classType: Bullet,
-    //   runChildUpdate: true,
-    //   maxSize: 20,
-    // });
+    this.bullets = this.add.group({
+      classType: Bullet,
+      runChildUpdate: true,
+      maxSize: 20,
+    });
 
     this.control = this.input.keyboard!.addKeys(this.controlScheme) as any;
 
@@ -77,16 +96,16 @@ export class Game extends Scene {
     this.cursor.moveWithPointer(pointer);
   }
 
-  // private _fireBullet(
-  //   x: number,
-  //   y: number,
-  //   r: number,
-  //   flip: boolean,
-  //   playerDirX: number,
-  // ) {
-  //   const bullet: Bullet = this.bullets.get();
-  //   if (bullet) {
-  //     bullet.shoot(x, y, r, flip, playerDirX);
-  //   }
-  // }
+  private _fireBullet(
+    x: number,
+    y: number,
+    r: number,
+    flip: boolean,
+    playerDirX: number,
+  ) {
+    const bullet: Bullet = this.bullets.get();
+    if (bullet) {
+      bullet.shoot(x, y, r, flip, playerDirX);
+    }
+  }
 }

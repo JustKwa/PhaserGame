@@ -1,0 +1,236 @@
+{ "compressionlevel":-1,
+ "height":20,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+         "height":20,
+         "id":1,
+         "name":"Tile Layer 1",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":30,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[2, 2, 2, 2, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 3, 3, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 3, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 3,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 3, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2,
+            2, 2, 2, 3, 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 2, 4, 2,
+            3, 2, 2, 3, 2, 2, 2, 2, 4, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 3, 2, 2, 2, 2, 2, 3,
+            2, 2, 2, 2, 2, 4, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 2, 2, 2, 2, 3, 2, 3, 2, 2,
+            4, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 2, 2,
+            2, 3, 2, 4, 2, 2, 4, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 4, 3, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            4, 2, 2, 2, 2, 2, 3, 2, 2, 2, 4, 2, 2, 3, 2, 2, 2, 2, 2, 2, 3, 4, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 4, 4, 2, 2, 4, 2, 3, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 4, 2, 3, 2, 2, 2, 2, 2, 3,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 3, 2, 2, 2, 2, 3, 2, 4, 3, 3, 2,
+            2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 4, 2, 2, 2, 4, 2, 2, 2,
+            2, 2, 3, 3, 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 3, 4, 2, 2, 3, 4, 2, 2, 2, 2, 2, 2, 2, 3,
+            2, 2, 2, 2, 2, 3, 2, 2, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 2, 3,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 4, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 4, 2, 2, 2, 2,
+            4, 2, 3, 2, 4, 2, 2, 2, 2, 3, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 4, 2, 4, 2, 2, 2, 2, 3, 2, 2, 4, 2, 4, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 4, 2, 2, 2, 2, 2, 3, 2, 4, 2, 4, 2, 2, 4, 2, 4, 2, 4],
+         "height":20,
+         "id":3,
+         "name":"Grass",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":30,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[1, 15, 2, 1, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0,
+            1, 2, 1, 2, 2, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 2, 2, 1, 2, 2, 0,
+            1, 1, 1, 1, 2, 2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 1, 2, 2, 2, 1, 1, 1, 0,
+            2, 2, 2, 2, 1, 2, 9, 2, 1, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 1, 1, 2, 1, 1, 1, 1, 1, 0,
+            2, 2, 15, 2, 2, 2, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 1, 1, 2, 2, 2,
+            2, 2, 1, 12, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 2, 1, 1, 11, 5, 2,
+            2, 2, 2, 2, 2, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 7,
+            1, 1, 8, 2, 2, 2, 1, 2, 2, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 7, 11, 13, 7, 6, 7, 7, 7, 7, 11, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 11, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0,
+            2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 16, 7, 7,
+            2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            2, 1, 1, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            2, 8, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":20,
+         "id":4,
+         "name":"Road",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":30,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":5,
+ "nextobjectid":1,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tiledversion":"1.11.2",
+ "tileheight":16,
+ "tilesets":[
+        {
+         "columns":0,
+         "firstgid":1,
+         "grid":
+            {
+             "height":1,
+             "orientation":"orthogonal",
+             "width":1
+            },
+         "margin":0,
+         "name":"Apocalypse",
+         "spacing":0,
+         "tilecount":16,
+         "tileheight":16,
+         "tiles":[
+                {
+                 "id":0,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Terrain Variations\/Zombie-Tileset---_0077_Capa-78.png",
+                 "imageheight":16,
+                 "imagewidth":16
+                }, 
+                {
+                 "id":1,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Terrain Variations\/Zombie-Tileset---_0078_Capa-79.png",
+                 "imageheight":16,
+                 "imagewidth":16
+                }, 
+                {
+                 "id":2,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Terrain Variations\/Zombie-Tileset---_0079_Capa-80.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "probability":0.0799999982118607
+                }, 
+                {
+                 "id":3,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Terrain Variations\/Zombie-Tileset---_0080_Capa-81.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "probability":0.0799999982118607
+                }, 
+                {
+                 "id":4,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Modular Terrain Path\/Zombie-Tileset---_0065_Capa-66.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "probability":0.0199999995529652
+                }, 
+                {
+                 "id":5,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Modular Terrain Path\/Zombie-Tileset---_0066_Capa-67.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "probability":0.0199999995529652
+                }, 
+                {
+                 "id":6,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Modular Terrain Path\/Zombie-Tileset---_0067_Capa-68.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "probability":0.0199999995529652
+                }, 
+                {
+                 "id":7,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Modular Terrain Path\/Zombie-Tileset---_0068_Capa-69.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "probability":0.0199999995529652
+                }, 
+                {
+                 "id":8,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Modular Terrain Path\/Zombie-Tileset---_0069_Capa-70.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "probability":0.0199999995529652
+                }, 
+                {
+                 "id":9,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Modular Terrain Path\/Zombie-Tileset---_0070_Capa-71.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "probability":0.0199999995529652
+                }, 
+                {
+                 "id":10,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Modular Terrain Path\/Zombie-Tileset---_0071_Capa-72.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "probability":0.0199999995529652
+                }, 
+                {
+                 "id":11,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Modular Terrain Path\/Zombie-Tileset---_0072_Capa-73.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "probability":0.0199999995529652
+                }, 
+                {
+                 "id":12,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Modular Terrain Path\/Zombie-Tileset---_0073_Capa-74.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "probability":0.0199999995529652
+                }, 
+                {
+                 "id":13,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Modular Terrain Path\/Zombie-Tileset---_0074_Capa-75.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "probability":0.0199999995529652
+                }, 
+                {
+                 "id":14,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Modular Terrain Path\/Zombie-Tileset---_0075_Capa-76.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "probability":0.0199999995529652
+                }, 
+                {
+                 "id":15,
+                 "image":"..\/..\/..\/Downloads\/Zombie Apocalypse Tileset\/Organized separated sprites\/Modular Terrain Path\/Zombie-Tileset---_0076_Capa-77.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "probability":0.0199999995529652
+                }],
+         "tilewidth":16
+        }],
+ "tilewidth":16,
+ "type":"map",
+ "version":"1.10",
+ "width":30
+}

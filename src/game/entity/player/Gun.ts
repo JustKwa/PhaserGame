@@ -1,13 +1,21 @@
 import { GameObjects } from 'phaser';
 import { Cursor } from '../Cursor';
 import { Player } from './Player';
+import { AssetKeys } from '../../common/AssetsImport';
 
 export class Gun extends GameObjects.Sprite {
   private _player: Player;
   private cursor: Cursor;
-  private _rotationFollowSpeed: number = 10;
-  // private _knockBackRadian: number;
-  // private _justShoot: boolean = false;
+  private _rotationFollowSpeed: number = 40;
+  private _knockBackRadian: number;
+  private _isCurrentlyFlip: boolean = false;
+  private _shootFrames: number = 0;
+  private _shootAnimation: Phaser.Animations.Animation;
+  private _shootTimer: number = 220;
+  public get shootTimer() {
+    return this._shootTimer;
+  }
+  private _lastShootTime: number = 0;
   constructor(
     scene: Phaser.Scene,
     x: number,
@@ -15,43 +23,49 @@ export class Gun extends GameObjects.Sprite {
     player: Player,
     cursor: Cursor,
   ) {
-    super(scene, x, y, 'gunSpriteSheet');
+    super(scene, x, y, AssetKeys.gunSpriteSheet);
 
     this._player = player;
     this.cursor = cursor;
     this.setOrigin(0.1, 0.5);
-    // this.setScale(1);
-    // this.setDepth(2);
+    this.setScale(0.5);
 
-    // this.on(
-    //   Phaser.Animations.Events.ANIMATION_COMPLETE,
-    //   (anim: { key: string }) => {
-    //     if (anim.key === 'Pistol-Shoot') {
-    //       this.setFrame(0);
-    //       this._justShoot = false;
-    //     }
-    //   },
-    // );
+    this.on(
+      Phaser.Animations.Events.ANIMATION_COMPLETE,
+      (anim: { key: string }) => {
+        if (anim.key === 'Pistol-Shoot') {
+          console.timeEnd(`fps ${this._shootAnimation.frameRate}`);
+          this.setFrame(0);
+        }
+      },
+    );
 
-    // this.on(
-    //   Phaser.Animations.Events.ANIMATION_START,
-    //   (anim: { key: string }) => {
-    //     if (anim.key === 'Pistol-Shoot') {
-    //       this._player.setPlayerShoot(this._knockBackRadian);
-    //       this._justShoot = true;
-    //     }
-    //   },
-    // );
+    this.on(
+      Phaser.Animations.Events.ANIMATION_START,
+      (anim: { key: string }) => {
+        if (anim.key === 'Pistol-Shoot') {
+          console.time(`fps ${this._shootAnimation.frameRate}`);
+        }
+      },
+    );
 
-    // scene.input.on(
-    //   Phaser.Input.Events.POINTER_DOWN,
-    //   this._onPlayerPointerDown.bind(this),
-    // );
-    //
-    // scene.input.on(
-    //   Phaser.Input.Events.POINTER_DOWN_OUTSIDE,
-    //   this._onPlayerPointerDown.bind(this),
-    // );
+    scene.input.on(
+      Phaser.Input.Events.POINTER_DOWN,
+      this._onPlayerPointerDown.bind(this),
+    );
+
+    scene.input.on(
+      Phaser.Input.Events.POINTER_DOWN_OUTSIDE,
+      this._onPlayerPointerDown.bind(this),
+    );
+
+    this.anims.createFromAseprite(AssetKeys.gunSpriteSheet);
+    this._shootAnimation = this.anims.get('Pistol-Shoot');
+    this._shootFrames = this._shootAnimation.frames.length;
+    this._shootAnimation.frameRate = this._delayToFrameRate(
+      this._shootTimer,
+      this._shootFrames,
+    );
   }
 
   update(delta: number): void {
@@ -66,20 +80,18 @@ export class Gun extends GameObjects.Sprite {
     return (radian * 180) / Math.PI;
   }
 
-  // private _onPlayerPointerDown() {
-  // this._knockBackRadian = this.rotation;
-  //   this.play(
-  //     {
-  //       key: 'Pistol-Shoot',
-  //       frameRate: 24,
-  //     },
-  //     true,
-  //   );
-  // }
+  private _onPlayerPointerDown() {
+    if (Date.now() - this._lastShootTime < this._shootTimer) return;
+    this._lastShootTime = Date.now();
+    this._knockBackRadian = this.rotation;
+    this._player.setPlayerShoot(this._knockBackRadian);
+    this.play(this._shootAnimation, true);
+  }
 
   private updateRotation(delta: number) {
     if (!this.cursor) return;
-    // if (this._justShoot) return;
+    if (this.anims.isPlaying) return;
+
     const r = this.getRadian(
       this._player.x,
       this._player.y,
@@ -88,9 +100,29 @@ export class Gun extends GameObjects.Sprite {
     );
     const t = (delta / 1000) * this._rotationFollowSpeed;
     this.setRotation(Phaser.Math.Angle.RotateTo(this.rotation, r, t));
-    const isFlip =
+    const shouldFlip =
       this.getDegree(this.rotation) > 90 || this.getDegree(this.rotation) < -90;
-    this.setFlipY(isFlip);
-    // this._player.setPlayerFlipX(isFlip);
+    if (this._isCurrentlyFlip === shouldFlip) return;
+    this._isCurrentlyFlip = shouldFlip;
+    this.setFlipY(shouldFlip);
+    this._player.setPlayerFlipX(shouldFlip);
   }
+
+  private _delayToFrameRate(delayMs: number, frameCount: number): number {
+    const fr = (frameCount * 1000) / delayMs;
+    return Math.round(fr);
+  }
+
+  private _outVector: Phaser.Math.Vector2 = Phaser.Math.Vector2.ZERO;
+  public getWorldPosition(): Phaser.Math.Vector2 {
+    this._outVector = this.getWorldPoint(this._outVector);
+    return this._outVector;
+  }
+
+  // public getWorldPoint(): Phaser.Math.Vector2 {
+  //   this.get
+  //   this._outVector.x = this.getWorldPoint().x;
+  //   this._outVector.y = this.getWorldPoint().y;
+  //   return this._outVector;
+  // }
 }
